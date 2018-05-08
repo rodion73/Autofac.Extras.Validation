@@ -1,6 +1,7 @@
 ﻿using Autofac.Extras.DynamicProxy;
 using FluentAssertions;
 using System;
+using System.ComponentModel.DataAnnotations;
 using Xunit;
 
 namespace Autofac.Extras.Validation
@@ -27,6 +28,18 @@ namespace Autofac.Extras.Validation
             testee.Invoking(f => f.Required2(null))
                 .Should().Throw<ArgumentNullException>()
                 .Which.ParamName.Should().Be("p");
+        }
+
+        [Fact]
+        public void Complex()
+        {
+            var testee = CreateTestee<Foo, IFoo>();
+
+            testee.Invoking(f => f.Complex(new Bar { Baz = "buz" }))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.Complex(new Bar()))
+                .Should().Throw<ValidationException>();
         }
 
         #endregion Public Methods

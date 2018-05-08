@@ -10,12 +10,18 @@ namespace Autofac.Extras.Validation
 
         void Required2(object p);
 
+        void Complex(Bar p);
+
         #endregion Public Methods
     }
 
     public class Foo : IFoo
     {
         #region Public Methods
+
+        public void Complex(Bar p)
+        {
+        }
 
         public void Required1(object p)
         {
@@ -26,5 +32,15 @@ namespace Autofac.Extras.Validation
         }
 
         #endregion Public Methods
+    }
+
+    public class Bar
+    {
+        #region Public Properties
+
+        [Required]
+        public string Baz { get; set; }
+
+        #endregion Public Properties
     }
 }
