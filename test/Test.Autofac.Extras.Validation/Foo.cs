@@ -6,9 +6,17 @@ namespace Autofac.Extras.Validation
     {
         #region Public Methods
 
-        void Required1([Required] object p);
+        void Required([Required] object p);
 
         void Required2(object p);
+
+        void MinLength([MinLength(2)] string p);
+
+        void MinLength2(string p);
+
+        void MaxLength([MaxLength(2)] string p);
+
+        void MaxLength2(string p);
 
         void Complex(Bar p);
 
@@ -23,11 +31,27 @@ namespace Autofac.Extras.Validation
         {
         }
 
-        public void Required1(object p)
+        public void Required(object p)
         {
         }
 
         public void Required2([Required] object p)
+        {
+        }
+
+        public void MinLength(string p)
+        {
+        }
+
+        public void MinLength2([MinLength(2)] string p)
+        {
+        }
+
+        public void MaxLength(string p)
+        {
+        }
+
+        public void MaxLength2([MaxLength(2)] string p)
         {
         }
 

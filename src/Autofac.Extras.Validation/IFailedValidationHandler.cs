@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Autofac.Extras.Validation
 {
-    internal interface IFailedValidationHandler
+    public interface IFailedValidationHandler
     {
         #region Public Methods
 

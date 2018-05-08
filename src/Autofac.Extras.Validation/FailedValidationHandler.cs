@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Autofac.Extras.Validation
 {
-    internal abstract class FailedValidationHandler<T> : IFailedValidationHandler
+    public abstract class FailedValidationHandler<T> : IFailedValidationHandler
         where T : ValidationAttribute
     {
         #region Protected Constructors

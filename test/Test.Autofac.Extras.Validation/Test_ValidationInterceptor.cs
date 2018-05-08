@@ -15,18 +15,58 @@ namespace Autofac.Extras.Validation
         {
             var testee = CreateTestee<Foo, IFoo>();
 
-            testee.Invoking(f => f.Required1(new object()))
+            testee.Invoking(f => f.Required(new object()))
                 .Should().NotThrow();
 
             testee.Invoking(f => f.Required2(new object()))
                 .Should().NotThrow();
 
-            testee.Invoking(f => f.Required1(null))
+            testee.Invoking(f => f.Required(null))
                 .Should().Throw<ArgumentNullException>()
                 .Which.ParamName.Should().Be("p");
 
             testee.Invoking(f => f.Required2(null))
                 .Should().Throw<ArgumentNullException>()
+                .Which.ParamName.Should().Be("p");
+        }
+
+        [Fact]
+        public void MinLength()
+        {
+            var testee = CreateTestee<Foo, IFoo>();
+
+            testee.Invoking(f => f.MinLength("123"))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.MinLength2("123"))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.MinLength("1"))
+                .Should().Throw<ArgumentException>()
+                .Which.ParamName.Should().Be("p");
+
+            testee.Invoking(f => f.MinLength2("1"))
+                .Should().Throw<ArgumentException>()
+                .Which.ParamName.Should().Be("p");
+        }
+
+        [Fact]
+        public void MaxLength()
+        {
+            var testee = CreateTestee<Foo, IFoo>();
+
+            testee.Invoking(f => f.MaxLength("1"))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.MaxLength2("1"))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.MaxLength("123"))
+                .Should().Throw<ArgumentException>()
+                .Which.ParamName.Should().Be("p");
+
+            testee.Invoking(f => f.MaxLength2("123"))
+                .Should().Throw<ArgumentException>()
                 .Which.ParamName.Should().Be("p");
         }
 

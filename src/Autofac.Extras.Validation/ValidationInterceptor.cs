@@ -1,4 +1,5 @@
-﻿using Castle.DynamicProxy;
+﻿using Autofac.Extras.Validation.Properties;
+using Castle.DynamicProxy;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -70,18 +71,11 @@ namespace Autofac.Extras.Validation
             }
         }
 
-        private void OnFailedValidation(ValidationAttribute attribute, ParameterInfo parameterInfo, object parameterValue)
-        {
-            throw new ArgumentException(
-                $"Invalid argument value {parameterValue}.",
-                parameterInfo.Name
-            );
-        }
+        private void OnFailedValidation(ValidationAttribute attribute, ParameterInfo parameterInfo, object parameterValue) =>
+            throw new ArgumentException(string.Format(Resources.Fallback_Error, parameterInfo.Name, parameterValue));
 
-        private void ValidateComplexParameter(object parameterValue)
-        {
+        private void ValidateComplexParameter(object parameterValue) =>
             Validator.ValidateObject(parameterValue, new ValidationContext(parameterValue));
-        }
 
         #endregion Private Methods
     }
