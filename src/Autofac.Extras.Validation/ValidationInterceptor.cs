@@ -43,6 +43,7 @@ namespace Autofac.Extras.Validation
                     if (attribute is RequiredAttribute attr)
                     {
                         OnFailedValidation(attr, parameterInfo, parameterValue);
+                        continue;
                     }
                 }
             }
