@@ -91,6 +91,26 @@ namespace Autofac.Extras.Validation
         }
 
         [Fact]
+        public void Regex()
+        {
+            var testee = CreateTestee<Foo, IFoo>();
+
+            testee.Invoking(f => f.Regex("123"))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.Regex2("123"))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.Regex("abc"))
+                .Should().Throw<ArgumentException>()
+                .Which.ParamName.Should().Be("p");
+
+            testee.Invoking(f => f.Regex2("abc"))
+                .Should().Throw<ArgumentException>()
+                .Which.ParamName.Should().Be("p");
+        }
+
+        [Fact]
         public void Complex()
         {
             var testee = CreateTestee<Foo, IFoo>();

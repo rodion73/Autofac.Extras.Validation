@@ -22,6 +22,10 @@ namespace Autofac.Extras.Validation
 
         void Email2(string p);
 
+        void Regex([RegularExpression("\\d+")] string p);
+
+        void Regex2(string p);
+
         void Complex(Bar p);
 
         #endregion Public Methods
@@ -64,6 +68,14 @@ namespace Autofac.Extras.Validation
         }
 
         public void Email2([EmailAddress] string p)
+        {
+        }
+
+        public void Regex(string p)
+        {
+        }
+
+        public void Regex2([RegularExpression("\\d+")] string p)
         {
         }
 

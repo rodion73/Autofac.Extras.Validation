@@ -95,5 +95,14 @@ namespace Autofac.Extras.Validation.Properties {
                 return ResourceManager.GetString("MinLength_Error", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The parameter {0} must match the regular expression &apos;{1}&apos;..
+        /// </summary>
+        internal static string Regex_Error {
+            get {
+                return ResourceManager.GetString("Regex_Error", resourceCulture);
+            }
+        }
     }
 }

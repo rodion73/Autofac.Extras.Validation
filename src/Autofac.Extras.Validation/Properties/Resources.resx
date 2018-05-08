@@ -129,4 +129,7 @@
   <data name="MinLength_Error" xml:space="preserve">
     <value>The parameter {0} must be a string or array type with a minimum length of '{1}'.</value>
   </data>
+  <data name="Regex_Error" xml:space="preserve">
+    <value>The parameter {0} must match the regular expression '{1}'.</value>
+  </data>
 </root>
