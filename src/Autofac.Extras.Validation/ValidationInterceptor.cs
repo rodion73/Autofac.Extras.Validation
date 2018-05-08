@@ -40,8 +40,7 @@ namespace Autofac.Extras.Validation
                 ValidateParamater(interfaceParameters[i], parameterValue);
                 ValidateParamater(classParameters[i], parameterValue);
 
-                var parameterType = interfaceParameters[i].ParameterType;
-                if ((parameterType.IsClass || parameterType.IsInterface) && parameterValue != null)
+                if (parameterValue != null)
                 {
                     ValidateComplexParameter(parameterValue);
                 }
