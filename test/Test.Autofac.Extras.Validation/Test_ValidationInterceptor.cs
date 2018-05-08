@@ -1,62 +1,53 @@
-﻿using Castle.DynamicProxy;
+﻿using Autofac.Extras.DynamicProxy;
 using FluentAssertions;
-using Moq;
-using System.ComponentModel.DataAnnotations;
+using System;
 using Xunit;
 
 namespace Autofac.Extras.Validation
-
 {
     public class Test_ValidationInterceptor
     {
         #region Public Methods
 
         [Fact]
-        public void Intercept_WithInvalidArg_Throws()
+        public void Required()
         {
-            var invocationMock = new Mock<IInvocation>();
+            var testee = CreateTestee<Foo, IFoo>();
 
-            invocationMock.Setup(m => m.Arguments)
-                .Returns(new[] { new Foo() });
-
-            var testee = new ValidationInterceptor();
-
-            testee.Invoking(t => t.Intercept(invocationMock.Object))
-                .Should().Throw<ValidationException>();
-
-            invocationMock.Verify(m => m.Proceed(), Times.Never());
-        }
-
-        [Fact]
-        public void Intercept_WithValidArg_DoesntThrow()
-        {
-            var invocationMock = new Mock<IInvocation>();
-
-            invocationMock.Setup(m => m.Arguments)
-                .Returns(new[] { new Foo { Bar = "bar" } });
-
-            var testee = new ValidationInterceptor();
-
-            testee.Invoking(t => t.Intercept(invocationMock.Object))
+            testee.Invoking(f => f.Required1(new object()))
                 .Should().NotThrow();
 
-            invocationMock.Verify(m => m.Proceed(), Times.Once());
+            testee.Invoking(f => f.Required2(new object()))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.Required1(null))
+                .Should().Throw<ArgumentNullException>()
+                .Which.ParamName.Should().Be("p");
+
+            testee.Invoking(f => f.Required2(null))
+                .Should().Throw<ArgumentNullException>()
+                .Which.ParamName.Should().Be("p");
         }
 
         #endregion Public Methods
 
-        #region Private Classes
+        #region Private Methods
 
-        private class Foo
+        private I CreateTestee<T, I>()
         {
-            #region Public Properties
+            var builder = new ContainerBuilder();
 
-            [Required]
-            public string Bar { get; set; }
+            builder.RegisterType<ValidationInterceptor>();
 
-            #endregion Public Properties
+            builder.RegisterType<T>()
+                .As<I>().EnableInterfaceInterceptors()
+                .InterceptedBy(typeof(ValidationInterceptor));
+
+            var container = builder.Build();
+
+            return container.Resolve<I>();
         }
 
-        #endregion Private Classes
+        #endregion Private Methods
     }
 }
