@@ -1,12 +1,32 @@
 ﻿using Castle.DynamicProxy;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Reflection;
 
 namespace Autofac.Extras.Validation
 {
     public class ValidationInterceptor : IInterceptor
     {
+        #region Private Fields
+
+        private static IEnumerable<IFailedValidationHandler> _failedValidationHandlers;
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
+        static ValidationInterceptor()
+        {
+            _failedValidationHandlers = typeof(ValidationInterceptor).Assembly.GetTypes()
+                .Where(t => !t.IsAbstract && t.IsAssignableTo<IFailedValidationHandler>())
+                .Select(t => Activator.CreateInstance(t)).Cast<IFailedValidationHandler>()
+                .ToArray();
+        }
+
+        #endregion Public Constructors
+
         #region Public Methods
 
         public void Intercept(IInvocation invocation)
@@ -40,10 +60,9 @@ namespace Autofac.Extras.Validation
             {
                 if (!attribute.IsValid(parameterValue))
                 {
-                    if (attribute is RequiredAttribute attr)
+                    foreach (var h in _failedValidationHandlers)
                     {
-                        OnFailedValidation(attr, parameterInfo, parameterValue);
-                        continue;
+                        h.OnFailedValidation(attribute, parameterInfo, parameterValue);
                     }
                 }
             }
@@ -52,11 +71,6 @@ namespace Autofac.Extras.Validation
         private void ValidateComplexParameter(object parameterValue)
         {
             Validator.ValidateObject(parameterValue, new ValidationContext(parameterValue));
-        }
-
-        private void OnFailedValidation(RequiredAttribute attribute, ParameterInfo parameterInfo, object parameterValue)
-        {
-            throw new ArgumentNullException(parameterInfo.Name);
         }
 
         #endregion Private Methods
