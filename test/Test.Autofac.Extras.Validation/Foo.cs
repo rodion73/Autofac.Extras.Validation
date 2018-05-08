@@ -18,6 +18,10 @@ namespace Autofac.Extras.Validation
 
         void MaxLength2(string p);
 
+        void Email([EmailAddress] string p);
+
+        void Email2(string p);
+
         void Complex(Bar p);
 
         #endregion Public Methods
@@ -52,6 +56,14 @@ namespace Autofac.Extras.Validation
         }
 
         public void MaxLength2([MaxLength(2)] string p)
+        {
+        }
+
+        public void Email(string p)
+        {
+        }
+
+        public void Email2([EmailAddress] string p)
         {
         }
 

@@ -71,6 +71,26 @@ namespace Autofac.Extras.Validation
         }
 
         [Fact]
+        public void Email()
+        {
+            var testee = CreateTestee<Foo, IFoo>();
+
+            testee.Invoking(f => f.Email("foo@bar.com"))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.Email2("foo@bar.com"))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.Email("123"))
+                .Should().Throw<ArgumentException>()
+                .Which.ParamName.Should().Be("p");
+
+            testee.Invoking(f => f.Email2("123"))
+                .Should().Throw<ArgumentException>()
+                .Which.ParamName.Should().Be("p");
+        }
+
+        [Fact]
         public void Complex()
         {
             var testee = CreateTestee<Foo, IFoo>();

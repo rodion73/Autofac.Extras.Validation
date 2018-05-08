@@ -61,6 +61,15 @@ namespace Autofac.Extras.Validation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The {0} parameter is not a valid e-mail address..
+        /// </summary>
+        internal static string EmailAddress_Error {
+            get {
+                return ResourceManager.GetString("EmailAddress_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The parameter {0} has invalid value &apos;{1}&apos;..
         /// </summary>
         internal static string Fallback_Error {
