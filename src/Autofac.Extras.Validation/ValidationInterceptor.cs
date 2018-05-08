@@ -63,8 +63,19 @@ namespace Autofac.Extras.Validation
                     {
                         h.OnFailedValidation(attribute, parameterInfo, parameterValue);
                     }
+
+                    // fallback
+                    OnFailedValidation(attribute, parameterInfo, parameterValue);
                 }
             }
+        }
+
+        private void OnFailedValidation(ValidationAttribute attribute, ParameterInfo parameterInfo, object parameterValue)
+        {
+            throw new ArgumentException(
+                $"Invalid argument value {parameterValue}.",
+                parameterInfo.Name
+            );
         }
 
         private void ValidateComplexParameter(object parameterValue)

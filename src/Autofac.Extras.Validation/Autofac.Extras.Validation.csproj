@@ -8,6 +8,7 @@
     <PackageProjectUrl>https://github.com/rodion73/Autofac.Extras.Validation</PackageProjectUrl>
     <PackageTags>autofac, interceptor, validation</PackageTags>
     <Copyright>© Rodion Novoselov, 2018</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

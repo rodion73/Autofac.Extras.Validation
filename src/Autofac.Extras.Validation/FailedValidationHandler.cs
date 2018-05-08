@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
 namespace Autofac.Extras.Validation
@@ -20,7 +21,7 @@ namespace Autofac.Extras.Validation
         {
             if (attribute is T attr)
             {
-                OnFailedValidation(attr, parameterInfo, parameterValue);
+                throw CreateFailedValidationException(attr, parameterInfo, parameterValue);
             }
         }
 
@@ -28,7 +29,7 @@ namespace Autofac.Extras.Validation
 
         #region Protected Methods
 
-        protected abstract void OnFailedValidation(T attribute, ParameterInfo parameterInfo, object parameterValue);
+        protected abstract Exception CreateFailedValidationException(T attribute, ParameterInfo parameterInfo, object parameterValue);
 
         #endregion Protected Methods
     }

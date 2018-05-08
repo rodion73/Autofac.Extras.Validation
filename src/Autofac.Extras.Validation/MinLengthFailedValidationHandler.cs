@@ -4,13 +4,13 @@ using System.Reflection;
 
 namespace Autofac.Extras.Validation
 {
-    internal class RequiredFailedValidationHandler : FailedValidationHandler<RequiredAttribute>
+    internal class MinLengthFailedValidationHandler : FailedValidationHandler<MinLengthAttribute>
     {
         #region Protected Methods
 
         protected override Exception CreateFailedValidationException(
-            RequiredAttribute attribute, ParameterInfo parameterInfo, object parameterValue) =>
-            new ArgumentNullException(parameterInfo.Name);
+            MinLengthAttribute attribute, ParameterInfo parameterInfo, object parameterValue) =>
+            new ArgumentException();
 
         #endregion Protected Methods
     }
