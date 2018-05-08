@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Rodion Novoselov</Authors>
+    <Company />
+    <Description>Autofac interceptor to do attribute-based parameter validation.</Description>
+    <PackageProjectUrl>https://github.com/rodion73/Autofac.Extras.Validation</PackageProjectUrl>
+    <PackageTags>autofac, interceptor, validation</PackageTags>
+    <Copyright>© Rodion Novoselov, 2018</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
