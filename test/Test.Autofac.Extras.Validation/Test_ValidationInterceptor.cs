@@ -38,6 +38,9 @@ namespace Autofac.Extras.Validation
             testee.Invoking(f => f.Complex(new Bar { Baz = "buz" }))
                 .Should().NotThrow();
 
+            testee.Invoking(f => f.Complex(null))
+                .Should().NotThrow();
+
             testee.Invoking(f => f.Complex(new Bar()))
                 .Should().Throw<ValidationException>();
         }
