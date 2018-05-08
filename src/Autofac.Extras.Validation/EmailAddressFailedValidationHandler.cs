@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Autofac.Extras.Validation
 {
-    internal class EmailAddressFailedValidationHandler : GenericFailedValidationHandler<EmailAddressAttribute>
+    internal class EmailAddressFailedValidationHandler : ArgumentExceptionFailedValidationHandler<EmailAddressAttribute>
     {
         #region Protected Methods
 

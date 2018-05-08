@@ -97,6 +97,15 @@ namespace Autofac.Extras.Validation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The parameter {0} must be between {1} and {2}..
+        /// </summary>
+        internal static string Range_Error {
+            get {
+                return ResourceManager.GetString("Range_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The parameter {0} must match the regular expression &apos;{1}&apos;..
         /// </summary>
         internal static string Regex_Error {

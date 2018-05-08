@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Autofac.Extras.Validation
 {
-    internal class RegexFailedValidationHandler : GenericFailedValidationHandler<RegularExpressionAttribute>
+    internal class RegexFailedValidationHandler : ArgumentExceptionFailedValidationHandler<RegularExpressionAttribute>
     {
         #region Protected Methods
 

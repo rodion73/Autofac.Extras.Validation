@@ -4,12 +4,12 @@ using System.Reflection;
 
 namespace Autofac.Extras.Validation
 {
-    public abstract class GenericFailedValidationHandler<T> : FailedValidationHandler<T>
+    public abstract class ArgumentExceptionFailedValidationHandler<T> : FailedValidationHandler<T>
         where T : ValidationAttribute
     {
         #region Protected Constructors
 
-        protected GenericFailedValidationHandler()
+        protected ArgumentExceptionFailedValidationHandler()
         {
         }
 
@@ -17,8 +17,8 @@ namespace Autofac.Extras.Validation
 
         #region Protected Methods
 
-        protected override Exception CreateFailedValidationException(T attribute, ParameterInfo parameterInfo, object parameterValue) =>
-            new ArgumentException(CreateFailedValidationMessage(attribute, parameterInfo, parameterValue), parameterInfo.Name);
+        protected override void OnFailedValidation(T attribute, ParameterInfo parameterInfo, object parameterValue) =>
+            throw new ArgumentException(CreateFailedValidationMessage(attribute, parameterInfo, parameterValue), parameterInfo.Name);
 
         protected abstract string CreateFailedValidationMessage(T attribute, ParameterInfo parameterInfo, object parameterValue);
 

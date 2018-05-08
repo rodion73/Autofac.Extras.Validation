@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Autofac.Extras.Validation
 {
-    internal class MinLengthFailedValidationHandler : GenericFailedValidationHandler<MinLengthAttribute>
+    internal class MinLengthFailedValidationHandler : ArgumentExceptionFailedValidationHandler<MinLengthAttribute>
     {
         #region Protected Methods
 

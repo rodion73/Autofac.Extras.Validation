@@ -8,9 +8,8 @@ namespace Autofac.Extras.Validation
     {
         #region Protected Methods
 
-        protected override Exception CreateFailedValidationException(
-            RequiredAttribute attribute, ParameterInfo parameterInfo, object parameterValue) =>
-            new ArgumentNullException(parameterInfo.Name);
+        protected override void OnFailedValidation(RequiredAttribute attribute, ParameterInfo parameterInfo, object parameterValue) =>
+            throw new ArgumentNullException(parameterInfo.Name);
 
         #endregion Protected Methods
     }
