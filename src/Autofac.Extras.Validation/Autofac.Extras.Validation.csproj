@@ -9,6 +9,7 @@
     <PackageTags>autofac, interceptor, validation</PackageTags>
     <Copyright>© Rodion Novoselov, 2018</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseUrl>https://github.com/rodion73/Autofac.Extras.Validation/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>
