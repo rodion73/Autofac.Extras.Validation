@@ -233,13 +233,15 @@ namespace Autofac.Extras.Validation
         private I CreateTestee<T, I>()
         {
             var builder = new ContainerBuilder();
+
             builder.RegisterModule<ValidationModule>();
 
             builder.RegisterType<Foo>().As<IFoo>()
                 .EnableInterfaceInterceptors()
-                .InterceptedBy(typeof(ValidationInterceptor));
+                .EnableParametersValidation();
 
             var container = builder.Build();
+
             return container.Resolve<I>();
         }
 
