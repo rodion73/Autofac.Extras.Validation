@@ -42,6 +42,10 @@ namespace Autofac.Extras.Validation
 
         void CreditCard2(string p);
 
+        void Custom([CustomValidation] string p);
+
+        void Custom2(string p);
+
         void Complex(Bar p);
 
         #endregion Public Methods
@@ -212,6 +216,26 @@ namespace Autofac.Extras.Validation
         }
 
         [Fact]
+        public void Custom()
+        {
+            var testee = CreateTestee<Foo, IFoo>();
+
+            testee.Invoking(f => f.Custom("foo"))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.Custom2("foo"))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.Custom("bar"))
+                .Should().Throw<ArgumentException>()
+                .Which.ParamName.Should().Be("p");
+
+            testee.Invoking(f => f.Custom2("bar"))
+                .Should().Throw<ArgumentException>()
+                .Which.ParamName.Should().Be("p");
+        }
+
+        [Fact]
         public void Complex()
         {
             var testee = CreateTestee<Foo, IFoo>();
@@ -320,6 +344,14 @@ namespace Autofac.Extras.Validation
         {
         }
 
+        public void Custom(string p)
+        {
+        }
+
+        public void Custom2([CustomValidation] string p)
+        {
+        }
+
         #endregion Public Methods
     }
 
@@ -331,5 +363,15 @@ namespace Autofac.Extras.Validation
         public string Baz { get; set; }
 
         #endregion Public Properties
+    }
+
+    public class CustomValidationAttribute : ValidationAttribute
+    {
+        #region Public Methods
+
+        public override bool IsValid(object value) =>
+            value == null || value.Equals("foo");
+
+        #endregion Public Methods
     }
 }
