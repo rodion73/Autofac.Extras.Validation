@@ -1,6 +1,17 @@
+
 # Autofac.Extras.Validation
 
 An Autofac interceptor that validates input method parameters with data annotation validation attributes like 'Require', 'Range', etc.
+
+## How to install
+
+### With package manager
+
+> Install-Package Autofac.Extras.Validation
+
+### With .NET CLI
+
+> dotnet add package Autofac.Extras.Validation
 
 ## How to use
 
