@@ -3,7 +3,6 @@ using Castle.DynamicProxy;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Reflection;
 
 namespace Autofac.Extras.Validation
@@ -12,18 +11,16 @@ namespace Autofac.Extras.Validation
     {
         #region Private Fields
 
-        private static IEnumerable<IFailedValidationHandler> _failedValidationHandlers;
+        private readonly IEnumerable<IFailedValidationHandler> _failedValidationHandlers;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        static ValidationInterceptor()
+        public ValidationInterceptor(IEnumerable<IFailedValidationHandler> failedValidationHandlers)
         {
-            _failedValidationHandlers = typeof(ValidationInterceptor).Assembly.GetTypes()
-                .Where(t => !t.IsAbstract && t.IsAssignableTo<IFailedValidationHandler>())
-                .Select(t => Activator.CreateInstance(t)).Cast<IFailedValidationHandler>()
-                .ToArray();
+            _failedValidationHandlers = failedValidationHandlers ??
+                throw new ArgumentNullException(nameof(failedValidationHandlers));
         }
 
         #endregion Public Constructors
@@ -38,6 +35,7 @@ namespace Autofac.Extras.Validation
             for (var i = 0; i < interfaceParameters.Length; i++)
             {
                 var parameterValue = invocation.Arguments[i];
+
                 ValidateParamater(interfaceParameters[i], parameterValue);
                 ValidateParamater(classParameters[i], parameterValue);
 
@@ -65,14 +63,13 @@ namespace Autofac.Extras.Validation
                         h.OnFailedValidation(attribute, parameterInfo, parameterValue);
                     }
 
-                    // fallback
-                    OnFailedValidation(attribute, parameterInfo, parameterValue);
+                    OnFailedValidationFallback(attribute, parameterInfo, parameterValue);
                 }
             }
         }
 
-        private void OnFailedValidation(ValidationAttribute attribute, ParameterInfo parameterInfo, object parameterValue) =>
-            throw new ArgumentException(string.Format(Resources.Fallback_Error, parameterInfo.Name, parameterValue));
+        private void OnFailedValidationFallback(ValidationAttribute attribute, ParameterInfo parameterInfo, object parameterValue) =>
+            throw new ArgumentException(string.Format(Resources.Fallback_Error, parameterInfo.Name, parameterValue), parameterInfo.Name);
 
         private void ValidateComplexParameter(object parameterValue) =>
             Validator.ValidateObject(parameterValue, new ValidationContext(parameterValue));
