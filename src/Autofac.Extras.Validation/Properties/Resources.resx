@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CreditCard_Error" xml:space="preserve">
+    <value>The parameter {0} is not a valid credit card number.</value>
+  </data>
   <data name="EmailAddress_Error" xml:space="preserve">
     <value>The {0} parameter is not a valid e-mail address.</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="MinLength_Error" xml:space="preserve">
     <value>The parameter {0} must be a string or array type with a minimum length of '{1}'.</value>
+  </data>
+  <data name="Phone_Error" xml:space="preserve">
+    <value>The parameter {0} is not a valid phone number.</value>
   </data>
   <data name="Range_Error" xml:space="preserve">
     <value>The parameter {0} must be between {1} and {2}.</value>

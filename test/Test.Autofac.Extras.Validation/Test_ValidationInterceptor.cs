@@ -30,6 +30,18 @@ namespace Autofac.Extras.Validation
 
         void Regex2(string p);
 
+        void Range([Range(10, 20)] int p);
+
+        void Range2(int p);
+
+        void Phone([Phone] string p);
+
+        void Phone2(string p);
+
+        void CreditCard([CreditCard] string p);
+
+        void CreditCard2(string p);
+
         void Complex(Bar p);
 
         #endregion Public Methods
@@ -140,6 +152,66 @@ namespace Autofac.Extras.Validation
         }
 
         [Fact]
+        public void Range()
+        {
+            var testee = CreateTestee<Foo, IFoo>();
+
+            testee.Invoking(f => f.Range(15))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.Range2(15))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.Range(1))
+                .Should().Throw<ArgumentOutOfRangeException>()
+                .Which.ParamName.Should().Be("p");
+
+            testee.Invoking(f => f.Range2(1))
+                .Should().Throw<ArgumentOutOfRangeException>()
+                .Which.ParamName.Should().Be("p");
+        }
+
+        [Fact]
+        public void Phone()
+        {
+            var testee = CreateTestee<Foo, IFoo>();
+
+            testee.Invoking(f => f.Phone("123"))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.Phone2("123"))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.Phone("abc"))
+                .Should().Throw<ArgumentException>()
+                .Which.ParamName.Should().Be("p");
+
+            testee.Invoking(f => f.Phone2("abc"))
+                .Should().Throw<ArgumentException>()
+                .Which.ParamName.Should().Be("p");
+        }
+
+        [Fact]
+        public void CreditCard()
+        {
+            var testee = CreateTestee<Foo, IFoo>();
+
+            testee.Invoking(f => f.CreditCard("5105105105105100"))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.CreditCard2("5105105105105100"))
+                .Should().NotThrow();
+
+            testee.Invoking(f => f.CreditCard("123"))
+                .Should().Throw<ArgumentException>()
+                .Which.ParamName.Should().Be("p");
+
+            testee.Invoking(f => f.CreditCard2("123"))
+                .Should().Throw<ArgumentException>()
+                .Which.ParamName.Should().Be("p");
+        }
+
+        [Fact]
         public void Complex()
         {
             var testee = CreateTestee<Foo, IFoo>();
@@ -219,6 +291,30 @@ namespace Autofac.Extras.Validation
         }
 
         public void Regex2([RegularExpression("\\d+")] string p)
+        {
+        }
+
+        public void Range(int p)
+        {
+        }
+
+        public void Range2([Range(10, 20)] int p)
+        {
+        }
+
+        public void Phone(string p)
+        {
+        }
+
+        public void Phone2([Phone] string p)
+        {
+        }
+
+        public void CreditCard(string p)
+        {
+        }
+
+        public void CreditCard2([CreditCard] string p)
         {
         }
 

@@ -61,6 +61,15 @@ namespace Autofac.Extras.Validation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The parameter {0} is not a valid credit card number..
+        /// </summary>
+        internal static string CreditCard_Error {
+            get {
+                return ResourceManager.GetString("CreditCard_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The {0} parameter is not a valid e-mail address..
         /// </summary>
         internal static string EmailAddress_Error {
@@ -93,6 +102,15 @@ namespace Autofac.Extras.Validation.Properties {
         internal static string MinLength_Error {
             get {
                 return ResourceManager.GetString("MinLength_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The parameter {0} is not a valid phone number..
+        /// </summary>
+        internal static string Phone_Error {
+            get {
+                return ResourceManager.GetString("Phone_Error", resourceCulture);
             }
         }
         
